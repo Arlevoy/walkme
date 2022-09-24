@@ -1,6 +1,6 @@
+import { theme } from '#shared/theme';
 import React, { FunctionComponent } from 'react';
 import { ScrollView, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
-import { theme } from '../../../shared/theme';
 
 interface MapStyles {
   overlay: ViewStyle;

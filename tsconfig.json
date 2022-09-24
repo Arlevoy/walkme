@@ -37,5 +37,6 @@
     "noUnusedParameters": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false
-  }
+  },
+  "include": ["index.js", "src/**/*", "types/**/*"]
 }
