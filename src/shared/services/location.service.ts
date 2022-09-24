@@ -10,6 +10,10 @@ export const getCurrentPositionAsync = async (): Promise<Location.LocationObject
   return await Location.getCurrentPositionAsync();
 };
 
+export const getLastKnownPositionAsync = async (): Promise<Location.LocationObject | null> => {
+  return await Location.getLastKnownPositionAsync();
+};
+
 export const mapLocationToRegion = (location: Location.LocationObject): Region => {
   const { latitude, longitude } = location.coords;
 

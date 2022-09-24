@@ -13,19 +13,29 @@ exports[`Map should render Map 1`] = `
   testID="map"
 >
   <AIRMap
-    initialRegion={null}
+    initialRegion={
+      Object {
+        "latitude": 48.85625516456069,
+        "latitudeDelta": 0.18850770649190451,
+        "longitude": 2.343346362242182,
+        "longitudeDelta": 0.1475828137637336,
+      }
+    }
     onChange={[Function]}
     onLayout={[Function]}
     onMapReady={[Function]}
     onMarkerPress={[Function]}
+    onRegionChange={[Function]}
     region={
       Object {
-        "latitude": 48.85937441095902,
-        "latitudeDelta": 0.005,
-        "longitude": 2.3898020245080662,
-        "longitudeDelta": 0.005,
+        "latitude": 48.85625516456069,
+        "latitudeDelta": 0.18850770649190451,
+        "longitude": 2.343346362242182,
+        "longitudeDelta": 0.1475828137637336,
       }
     }
+    showsMyLocationButton={true}
+    showsUserLocation={true}
     style={
       Object {
         "height": 1334,
@@ -38,7 +48,7 @@ exports[`Map should render Map 1`] = `
         Object {
           "latitude": 48.85937441095902,
           "latitudeDelta": 0.005,
-          "longitude": 2.3898020245080662,
+          "longitude": 2.489802024508066,
           "longitudeDelta": 0.005,
         }
       }
@@ -56,6 +66,73 @@ exports[`Map should render Map 1`] = `
       testID="marker"
     />
   </AIRMap>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+        "padding": 24,
+        "position": "absolute",
+        "right": 0,
+        "top": 50,
+      }
+    }
+  >
+    <RNSVGSvgView
+      bbHeight={46}
+      bbWidth={46}
+      focusable={false}
+      height={46}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 46,
+            "width": 46,
+          },
+        ]
+      }
+      width={46}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <RNSVGGroup>
+        <RNSVGPath
+          d="M12 8.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Z"
+          fill={4278190080}
+          propList={
+            Array [
+              "fill",
+            ]
+          }
+        />
+        <RNSVGPath
+          clipRule={0}
+          d="M12 1.25a.75.75 0 0 1 .75.75v1.282a8.752 8.752 0 0 1 7.968 7.968H22a.75.75 0 0 1 0 1.5h-1.282a8.752 8.752 0 0 1-7.968 7.968V22a.75.75 0 0 1-1.5 0v-1.282a8.752 8.752 0 0 1-7.968-7.968H2a.75.75 0 0 1 0-1.5h1.282a8.752 8.752 0 0 1 7.968-7.968V2a.75.75 0 0 1 .75-.75ZM4.75 12a7.25 7.25 0 1 0 14.5 0 7.25 7.25 0 0 0-14.5 0Z"
+          fill={4278190080}
+          fillRule={0}
+          propList={
+            Array [
+              "fill",
+              "fillRule",
+            ]
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
   <Modal
     animationType="none"
     deviceHeight={null}

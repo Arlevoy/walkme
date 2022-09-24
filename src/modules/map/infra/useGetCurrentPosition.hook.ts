@@ -1,28 +1,48 @@
-import * as Location from 'expo-location';
+import { INITIAL_REGION } from '#modules/map/presentation/Map/Map.constants';
 import { useEffect, useState } from 'react';
 import { Region } from 'react-native-maps';
 import {
-  getCurrentPositionAsync,
+  getLastKnownPositionAsync,
   mapLocationToRegion,
   requestForegroundPermissionsAsync,
 } from '../../../shared/services/location.service';
 
-export const useGetCurrentRegion = (): { currentRegion: Region | null } => {
-  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+export const useGetCurrentRegion = (
+  setRegion: (region: Region) => void
+): {
+  currentRegion: Region;
+  onCurrentPositionPress: () => void;
+} => {
+  const [currentRegion, setCurrentRegion] = useState<Region>();
+
+  const setRegionFromLocation = async () => {
+    const location = await getLastKnownPositionAsync();
+    if (!location) return;
+    setCurrentRegion(mapLocationToRegion(location));
+  };
 
   useEffect(() => {
     (async () => {
       const { status } = await requestForegroundPermissionsAsync();
       if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+
         return;
       }
 
-      const location = await getCurrentPositionAsync();
-      setLocation(location);
+      setRegionFromLocation();
     })();
   }, []);
 
-  if (!location) return { currentRegion: null };
+  const onCurrentPositionPress = async () => {
+    try {
+      const location = await getLastKnownPositionAsync();
+      if (!location) return;
+      setRegion(mapLocationToRegion(location));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  return { currentRegion: mapLocationToRegion(location) };
+  return { currentRegion: currentRegion || INITIAL_REGION, onCurrentPositionPress };
 };
