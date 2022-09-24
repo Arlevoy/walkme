@@ -3,6 +3,7 @@
     "name": "walkme",
     "slug": "walkme",
     "version": "1.0.0",
+    "owner": "arthur_le",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
