@@ -1,7 +1,7 @@
-import { StyleSheet, View } from 'react-native';
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Map } from './src/modules/map/presentation/Map/Map';
 import { theme } from './src/shared/theme';
-import { Map } from './src/modules/map/presentation/Map';
 
 export default function App() {
   return (
@@ -13,9 +13,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: theme.colors.white,
     alignItems: 'center',
+    backgroundColor: theme.colors.white,
+    flex: 1,
     justifyContent: 'center',
   },
 });

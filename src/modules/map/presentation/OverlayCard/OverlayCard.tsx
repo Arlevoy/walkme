@@ -1,7 +1,8 @@
 import { OverlayCardInterface } from '#modules/map/presentation/OverlayCard/OverlayCard.interface';
 import { theme } from '#shared/theme';
 import React, { FunctionComponent } from 'react';
-import { ScrollView, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
+import Modal from 'react-native-modal';
 
 interface MapStyles {
   overlay: ViewStyle;
@@ -36,23 +37,29 @@ const styles = StyleSheet.create<MapStyles>({
 
 interface OverlayCardProps {
   status: OverlayCardInterface['status'];
+  onClose: () => void;
 }
 
-export const OverlayCard: FunctionComponent<OverlayCardProps> = ({ status }) => {
-  if (status === 'HIDDEN') return <View />;
-
+export const OverlayCard: FunctionComponent<OverlayCardProps> = ({ status, onClose }) => {
   return (
-    <ScrollView style={styles.overlay}>
-      <Text style={styles.title}>My Home</Text>
-      <Text style={styles.description}>
-        orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-        been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-        galley of type and scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-        passages, and more recently with desktop publishing software like Aldus PageMaker including
-        versions of Lorem Ipsum.
-      </Text>
-    </ScrollView>
+    <Modal
+      style={styles.overlay}
+      isVisible={status === 'DISPLAYED'}
+      backdropOpacity={0}
+      onBackdropPress={onClose}
+    >
+      <ScrollView>
+        <Text style={styles.title}>My Home</Text>
+        <Text style={styles.description}>
+          orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+          been the standard dummy text ever since the 1500s, when an unknown printer took a galley
+          of type and scrambled it to make a type specimen book. It has survived not only five
+          centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+          It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+          passages, and more recently with desktop publishing software like Aldus PageMaker
+          including versions of Lorem Ipsum.
+        </Text>
+      </ScrollView>
+    </Modal>
   );
 };
