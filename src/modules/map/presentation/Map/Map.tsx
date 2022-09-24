@@ -45,9 +45,9 @@ export const Map: FunctionComponent = () => {
   const onCloseOverlayCard = () => setOverlayCardStatus('HIDDEN');
 
   return (
-    <View style={styles.container}>
+    <View testID="map" style={styles.container}>
       <MapView style={styles.map} region={currentRegion || HOME}>
-        <Marker key={1} coordinate={HOME} onPress={onMarkerPress} />
+        <Marker key={1} coordinate={HOME} onPress={onMarkerPress} testID={'marker'} />
       </MapView>
       <OverlayCard status={overlayCardStatus} onClose={onCloseOverlayCard} />
     </View>
