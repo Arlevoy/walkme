@@ -16,6 +16,8 @@ import { theme } from '../../../../shared/theme';
 import { useGetCurrentRegion } from '#modules/map/infra/useGetCurrentPosition.hook';
 import { FIRST_ROUTE } from '#modules/map/presentation/Map/Map.constants';
 import { OverlayCardInterface } from '#modules/map/presentation/OverlayCard/OverlayCard.interface';
+import { PointOfInterest } from '#modules/routes/domain/route.interface';
+import { getRoutesById } from '#modules/routes/infra/routes.api';
 import { CurrentPositionIcon } from '#shared/assets/icons/CurrentPositionIcon';
 import { OverlayCard } from '../OverlayCard/OverlayCard';
 
@@ -58,13 +60,6 @@ const styles = StyleSheet.create<MapStyles>({
   },
 });
 
-const HOME = {
-  latitude: 48.85937441095902,
-  latitudeDelta: 0.005,
-  longitude: 2.489802024508066,
-  longitudeDelta: 0.005,
-};
-
 const DEFAULT_PADDING = {
   top: theme.spacing.unit * 4,
   bottom: theme.spacing.unit * 4,
@@ -75,7 +70,9 @@ const DEFAULT_PADDING = {
 export const Map: FunctionComponent = () => {
   const [overlayCardStatus, setOverlayCardStatus] =
     useState<OverlayCardInterface['status']>('HIDDEN');
-  const onMarkerPress = () => {
+  const [selectedPoi, setSelectedPoi] = useState<PointOfInterest>();
+  const onMarkerPress = (poi: PointOfInterest) => () => {
+    setSelectedPoi(poi);
     setOverlayCardStatus('DISPLAYED');
   };
   const mapViewRef = useRef<MapView>(null);
@@ -87,6 +84,7 @@ export const Map: FunctionComponent = () => {
     if (!mapViewRef || !mapViewRef.current) return;
     mapViewRef.current.fitToCoordinates(FIRST_ROUTE, { edgePadding: DEFAULT_PADDING });
   };
+  const firstRoute = getRoutesById(1);
 
   return (
     <SafeAreaView>
@@ -98,18 +96,23 @@ export const Map: FunctionComponent = () => {
           showsMyLocationButton={true}
           showsUserLocation={true}
         >
-          <Marker key={1} coordinate={HOME} onPress={onMarkerPress} testID={'marker'} />
-          {FIRST_ROUTE.map((region) => (
-            <Marker key={region.latitude} coordinate={region} onPress={onMarkerPress} />
+          {firstRoute[0]?.pointsOfInterest.map((poi) => (
+            <Marker key={poi.title} coordinate={poi.region} onPress={onMarkerPress(poi)} />
           ))}
         </MapView>
-        <TouchableOpacity onPress={onCurrentPositionPress} style={styles.currentPositionIcon}>
+        <TouchableOpacity
+          testID="currentPositionButton"
+          onPress={onCurrentPositionPress}
+          style={styles.currentPositionIcon}
+        >
           <CurrentPositionIcon />
         </TouchableOpacity>
         <TouchableOpacity onPress={onStartRoutePress} style={styles.startRouteButton}>
           <Text style={styles.startRouteText}>Démarre ton premier parcours !</Text>
         </TouchableOpacity>
-        <OverlayCard status={overlayCardStatus} onClose={onCloseOverlayCard} />
+        {selectedPoi && (
+          <OverlayCard poi={selectedPoi} status={overlayCardStatus} onClose={onCloseOverlayCard} />
+        )}
       </View>
     </SafeAreaView>
   );
