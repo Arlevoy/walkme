@@ -1,6 +1,6 @@
 import { INITIAL_REGION } from '#modules/map/presentation/Map/Map.constants';
-import { useEffect, useState } from 'react';
-import { Region } from 'react-native-maps';
+import React, { useEffect, useState } from 'react';
+import MapView, { Region } from 'react-native-maps';
 import {
   getLastKnownPositionAsync,
   mapLocationToRegion,
@@ -8,12 +8,13 @@ import {
 } from '../../../shared/services/location.service';
 
 export const useGetCurrentRegion = (
-  setRegion: (region: Region) => void
+  mapViewRef: React.MutableRefObject<MapView | null>
 ): {
   currentRegion: Region;
   onCurrentPositionPress: () => void;
 } => {
   const [currentRegion, setCurrentRegion] = useState<Region>();
+  console.log('🚀 ~ file: useGetCurrentPosition.hook.ts ~ line 17 ~ currentRegion', currentRegion);
 
   const setRegionFromLocation = async () => {
     const location = await getLastKnownPositionAsync();
@@ -37,8 +38,8 @@ export const useGetCurrentRegion = (
   const onCurrentPositionPress = async () => {
     try {
       const location = await getLastKnownPositionAsync();
-      if (!location) return;
-      setRegion(mapLocationToRegion(location));
+      if (!location || !mapViewRef || !mapViewRef.current) return;
+      mapViewRef.current.animateCamera({ center: location.coords });
     } catch (error) {
       console.log(error);
     }

@@ -1,3 +1,5 @@
+import { Region } from 'react-native-maps';
+
 export const INITIAL_REGION = {
   latitude: 48.85625516456069,
   latitudeDelta: 0.18850770649190451,
@@ -5,7 +7,7 @@ export const INITIAL_REGION = {
   longitudeDelta: 0.1475828137637336,
 };
 
-export const FIRST_ROUTE = [
+export const FIRST_ROUTE: Region[] = [
   {
     latitude: 48.86162558742782,
     latitudeDelta: 0.18850770649190451,
